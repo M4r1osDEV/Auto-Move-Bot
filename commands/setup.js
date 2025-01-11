@@ -1,9 +1,8 @@
 module.exports = {
     name: 'setup',
     description: "this is a setup command!",
-    async execute(message, args, Discord, fuel){
+    async execute(message, args, Discord, bot){
         
-
 
         //constants
         const wfs = await message.guild.channels.create('📞Waiting-For-Support', { type: 'voice' });
@@ -45,10 +44,8 @@ module.exports = {
        
        
        
-       
-       
         var temporary = [];
-        fuel.on('voiceStateUpdate', async (oldMember, newMember) => {
+        bot.on('voiceStateUpdate', async (oldMember, newMember) => {
             if (newMember.channel == wfsid) {
                 await newMember.guild.channels.create(`📞Support`, {
                     type: 'voice', parent: wfscatid, userLimit: 99
@@ -66,7 +63,7 @@ module.exports = {
                 });
             }
             if (temporary.length > 0) for (let i = 0; i < temporary.length; i++) {
-                let ch = fuel.channels.cache.get(temporary[i].newID);
+                let ch = bot.channels.cache.get(temporary[i].newID);
                 if (ch.members.size === 0) {
                     await ch.delete();
                     return temporary.splice(i, 1);
@@ -78,7 +75,7 @@ module.exports = {
         }); 
 
         var temporary = [];
-        fuel.on('voiceStateUpdate', async (oldMember, newMember) => {
+        bot.on('voiceStateUpdate', async (oldMember, newMember) => {
             if (newMember.channel == donateid) {
                 await newMember.guild.channels.create(`💸Donate`, {
                     type: 'voice', parent: donatecatid, userLimit: 99
@@ -96,7 +93,7 @@ module.exports = {
                 });
             }
             if (temporary.length > 0) for (let i = 0; i < temporary.length; i++) {
-                let ch = fuel.channels.cache.get(temporary[i].newID);
+                let ch = bot.channels.cache.get(temporary[i].newID);
                 if (ch.members.size === 0) {
                     await ch.delete();
                     return temporary.splice(i, 1);
@@ -106,4 +103,4 @@ module.exports = {
 
     }
 
-}    
+}
